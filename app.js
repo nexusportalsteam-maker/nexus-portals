@@ -1,6 +1,6 @@
 /* Nexus site. Fill these two lines from Supabase > Project Settings > API. */
-const SUPABASE_URL='https://yvqiyvozbetvskwwhrlg.supabase.co';
-const SUPABASE_KEY='sb_publishable_Ih55Z9wDGIGXHcCVG8X9TQ_jF1wxIim';
+const SUPABASE_URL='https://YOUR-PROJECT.supabase.co';
+const SUPABASE_KEY='YOUR-PUBLISHABLE-KEY';
 
 const $=(s,e=document)=>e.querySelector(s),$$=(s,e=document)=>[...e.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -63,7 +63,7 @@ function fx(c,ms=1200){M.classList.add(c);setTimeout(()=>M.classList.remove(c),m
 function wake(){clearTimeout(iT);iT=setTimeout(()=>{fx('yawn',2600);talk('idle');wake()},30000)}
 addEventListener('pointermove',e=>{
  wake();const r=P.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height*.3),d=Math.hypot(dx,dy)||1,k=Math.min(3,d/60);
- $$('.p').forEach(p=>p.style.transform=`translate(${dx/d*k}px,${dy/d*k}px)`);
+ $$('.p').forEach(p=>p.style.transform=`translate(${(M.classList.contains('fl')?-1:1)*dx/d*k}px,${dy/d*k}px)`);
 });
 addEventListener('keydown',wake);addEventListener('scroll',wake,{passive:true});
 P.onclick=()=>{talk('click');fx('bounce',600)};
@@ -127,3 +127,21 @@ async function tabL(){
 }
 if(location.hash==='#admin')openAdmin();
 addEventListener('hashchange',()=>{if(location.hash==='#admin')openAdmin()});
+
+/* ---------- v2: spotlight cards + Isuru walks ---------- */
+document.addEventListener('pointermove',e=>{const c=e.target.closest('.svc,.card,.step');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-r.left+'px');c.style.setProperty('--my',e.clientY-r.top+'px')}});
+L.walk=['Just stretching my legs. Nice.','Patrolling the footer. Nice.','Walking meeting. Very productive.','Off to review some pull requests.'];
+M.style.left=Math.max(0,innerWidth-M.offsetWidth-24)+'px';
+(function stroll(){
+ if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+ setTimeout(()=>{
+  if(M.classList.contains('min')||document.hidden||M.classList.contains('walk')){stroll();return}
+  const w=M.offsetWidth,lo=Math.max(0,100-w/2),hi=innerWidth-w-lo,cur=parseFloat(M.style.left)||0,x=lo+Math.random()*(hi-lo),dist=Math.abs(x-cur);
+  if(dist<120){stroll();return}
+  M.classList.toggle('fl',x>cur);
+  const dur=dist/(mood==='night'?40:mood==='morning'?110:70);
+  M.style.transitionDuration=dur+'s';M.classList.add('walk');M.style.left=x+'px';
+  if(Math.random()<.6)talk('walk',2800);
+  setTimeout(()=>{M.classList.remove('walk');stroll()},dur*1000);
+ },5000+Math.random()*6000);
+})();
