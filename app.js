@@ -9,73 +9,53 @@ const sb=ready?supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;
 $('#yr').textContent=new Date().getFullYear();
 
 /* ---------- public content ---------- */
-const DEMO=[
- {title:'Bloom Café',tag:'Website',description:'Menu, gallery and table enquiries for a local café.'},
- {title:'FleetTrack',tag:'Web app',description:'Live dashboard for a small delivery fleet.'},
- {title:'GymPass',tag:'Mobile app',description:'Installable booking app with offline class timetable.'}];
-function showProjects(list){
- $('#projects').innerHTML=list.map(p=>`<article class="card">${p.image_url?`<img loading="lazy" src="${esc(p.image_url)}" alt="${esc(p.title)}">`:`<div class="ph">${esc(p.tag||'PROJECT')}</div>`}<div class="b"><small>${esc(p.tag)}</small><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p>${p.link?`<a href="${esc(p.link)}" target="_blank" rel="noopener">View project</a>`:''}</div></article>`).join('');
-}
+const DEMO=[{title:'Bloom Café',tag:'Website',description:'Menu, gallery and table enquiries for a local café.'},{title:'FleetTrack',tag:'Web app',description:'Live dashboard for a small delivery fleet.'},{title:'GymPass',tag:'Mobile app',description:'Installable booking app with an offline timetable.'}];
+const hue=s=>[...s].reduce((a,c)=>a+c.charCodeAt(0)*7,0)%360;
+function showProjects(l){$('#projects').innerHTML=l.map(p=>`<article class="card">${p.image_url?`<img loading="lazy" src="${esc(p.image_url)}" alt="${esc(p.title)}">`:`<div class="ph" style="--h:${hue(p.title)}">${esc(p.title[0])}</div>`}<div class="b"><small>${esc(p.tag)}</small><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p>${p.link?`<a href="${esc(p.link)}" target="_blank" rel="noopener">View project</a>`:''}</div></article>`).join('')}
 const CK={email:'Email',phone:'Phone',whatsapp:'WhatsApp',linkedin:'LinkedIn',github:'GitHub',instagram:'Instagram'};
 function href(k,v){return k==='email'?'mailto:'+v:k==='phone'?'tel:'+v:k==='whatsapp'?'https://wa.me/'+v.replace(/\D/g,''):/^https?:/.test(v)?v:'https://'+v}
-function showContacts(s){
- const rows=Object.keys(CK).filter(k=>s[k]).map(k=>`<li>${CK[k]}: <a href="${esc(href(k,s[k]))}" target="_blank" rel="noopener">${esc(s[k])}</a></li>`);
- $('#cl').innerHTML=rows.join('')||'<li>Use the form and we will reply by email.</li>';
-}
+let S={};
+function showContacts(s){S=s;const r=Object.keys(CK).filter(k=>s[k]).map(k=>`<li>${CK[k]}: <a href="${esc(href(k,s[k]))}" target="_blank" rel="noopener">${esc(s[k])}</a></li>`);$('#cl').innerHTML=r.join('')||'<li>Use the form and we will reply by email.</li>'}
 async function load(){
- showProjects(DEMO);showContacts({});
- if(!sb)return;
+ showProjects(DEMO);showContacts({});if(!sb)return;
  const [p,s]=await Promise.all([sb.from('projects').select('*').eq('visible',true).order('created_at',{ascending:false}),sb.from('settings').select('*')]);
  if(p.data&&p.data.length)showProjects(p.data);
  if(s.data)showContacts(Object.fromEntries(s.data.map(r=>[r.key,r.value])));
 }
 load();
-
-$('#cf').onsubmit=async e=>{
- e.preventDefault();const f=e.target,st=$('#cs'),d={name:f.name.value.trim(),email:f.email.value.trim(),message:f.message.value.trim()};
- if(!sb){location.href=`mailto:?subject=Nexus enquiry&body=${encodeURIComponent(d.message)}`;return}
- st.textContent='Sending…';
- const {error}=await sb.from('leads').insert(d);
+async function sendLead(row,st,form,ok){
+ if(!sb){location.href=`mailto:?subject=Nexus enquiry&body=${encodeURIComponent(row.message)}`;return}
+ st.textContent='Sending…';const {error}=await sb.from('leads').insert(row);
  if(error){st.textContent='Could not send. Please try again or use the contact details.';return}
- f.reset();st.textContent='Message sent. We will reply soon.';talk('sent',5000);fx('party',2500);
-};
+ form.reset();st.textContent=ok;
+}
+$('#cf').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);sendLead({name:f.get('name').trim(),email:f.get('email').trim(),message:f.get('message').trim()},$('#cs'),e.target,'Message sent. We will reply soon.')};
 
-/* ---------- Isuru the mascot ---------- */
-const P=$('#pal'),M=$('#mascot'),say=$('#say');let sT,iT;
-const h=new Date().getHours();
-const mood=h>=5&&h<12?'morning':h>=12&&h<17?'day':h>=17&&h<21?'tea':'night';
-P.classList.add('m-'+mood);
-const L={
- morning:['Morning! Fresh code, fresh start. Nice.','Isuru here. Ready to build something. Nice.','Good morning! Tail is wagging, deploys are green.'],
- day:['Deep focus mode. Ask me anything. Nice.','Typing fast. Barking later.','Another bug fixed. Nice.'],
- tea:['Tea time. The best debugger. Nice.','One sip, one commit. Nice.','Evening! Biscuit-driven development.'],
- night:['Zzz… still compiling dreams…','Late shift. Even my semicolons yawn.','Shh… the servers are sleeping.'],
- click:['Nice!','Nice. Very nice.','Woof! I mean, 200 OK.','Careful, the spectacles are new.','Isuru approves. Nice.','Hello, human. Nice to meet you.'],
- svc:['Nice choice!','Ooh, I built one of these. Nice.','Good taste. Nice.'],
- proj:['Nice work, right?','We shipped that. Nice.'],
- type:['Go on, I am listening…','Tell me everything. Nice.','Big idea? Nice.'],
- sent:['Message sent! Nice. We will reply soon.','Nice!! Isuru approved.'],
- idle:['*yawn* Still here? Take your time. Nice.','Psst, the contact form is lonely.'],
- hide:['Okay, I will be quiet. Nice meeting you.']};
-const pick=a=>a[Math.random()*a.length|0];
-function talk(k,ms=3800){say.textContent=pick(L[k]);say.classList.add('on');clearTimeout(sT);sT=setTimeout(()=>say.classList.remove('on'),ms)}
-function fx(c,ms=1200){M.classList.add(c);setTimeout(()=>M.classList.remove(c),ms)}
-function wake(){clearTimeout(iT);iT=setTimeout(()=>{fx('yawn',2600);talk('idle');wake()},30000)}
-addEventListener('pointermove',e=>{
- wake();const r=P.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height*.3),d=Math.hypot(dx,dy)||1,k=Math.min(3,d/60);
- $$('.p').forEach(p=>p.style.transform=`translate(${(M.classList.contains('fl')?-1:1)*dx/d*k}px,${dy/d*k}px)`);
-});
-addEventListener('keydown',wake);addEventListener('scroll',wake,{passive:true});
-P.onclick=()=>{talk('click');fx('bounce',600)};
-document.addEventListener('mouseover',e=>{
- const s=e.target.closest('.svc,.card');if(!s||s.dataset.seen)return;s.dataset.seen=1;setTimeout(()=>delete s.dataset.seen,6000);
- talk(s.classList.contains('svc')?'svc':'proj');fx('push',1400);
-});
-$('#cf').addEventListener('focusin',()=>{M.classList.add('tilt');if(!M.dataset.t){M.dataset.t=1;talk('type')}});
-$('#cf').addEventListener('focusout',()=>M.classList.remove('tilt'));
-$('#hide').onclick=()=>{const m=M.classList.toggle('min');if(m)talk('hide');try{localStorage.setItem('iso-min',m?1:'')}catch(x){}};
-try{if(localStorage.getItem('iso-min'))M.classList.add('min')}catch(x){}
-setTimeout(()=>{if(!M.classList.contains('min'))talk(mood,4500)},1500);wake();
+/* ---------- price estimator ---------- */
+const cfg=$('#cfg');let shown=0,raf;
+function est(){
+ const t=$('[name=t]:checked',cfg),fs=$$('[name=f]:checked',cfg),w=+$('[name=w]',cfg).value;
+ let n=+t.dataset.p+fs.reduce((a,f)=>a+ +f.dataset.p,0);n=Math.round(n*(w<4?1.25:w>8?.9:1)/10)*10;
+ $('#wk').textContent=w+' weeks';$('#tm').textContent=w<4?'Rush delivery adds 25%':w>8?'Relaxed timeline saves 10%':'Standard timeline';
+ cancelAnimationFrame(raf);const a=shown,s=performance.now();
+ (function f(x){const k=Math.min(1,(x-s)/450);shown=Math.round(a+(n-a)*(1-Math.pow(1-k,3)));$('#pr').textContent='$'+shown.toLocaleString();if(k<1)raf=requestAnimationFrame(f)})(s);
+ return `${t.value}${fs.length?' with '+fs.map(f=>f.value).join(', '):''}. ${w} weeks. About $${n.toLocaleString()}.`;
+}
+cfg.addEventListener('input',est);est();
+cfg.onsubmit=e=>{e.preventDefault();const f=new FormData(cfg);sendLead({name:f.get('name').trim(),email:f.get('email').trim(),message:'Project brief: '+est()},$('#ps'),cfg,'Brief sent. We will reply with next steps.')};
+
+/* ---------- command menu (Ctrl/Cmd + K) ---------- */
+const cmd=$('#cmd'),cin=$('#cin'),cls=$('#cls');let items=[],ix=0;
+const go=s=>{cmd.close();$(s).scrollIntoView({behavior:'smooth'})};
+const ACT=[['Price a project',()=>go('#top')],['Services',()=>go('#services')],['Our work',()=>go('#work')],['How a project runs',()=>go('#process')],['Contact us',()=>go('#contact')],['Copy our email',()=>{cmd.close();S.email&&navigator.clipboard.writeText(S.email)}],['Admin sign in',()=>{cmd.close();openAdmin()}]];
+function draw(){const q=cin.value.toLowerCase();items=ACT.filter(a=>a[0].toLowerCase().includes(q));ix=Math.min(ix,Math.max(0,items.length-1));cls.innerHTML=items.map((a,i)=>`<li class="${i===ix?'on':''}" data-i="${i}">${a[0]}</li>`).join('')||'<li>No match</li>'}
+function openCmd(){cin.value='';ix=0;draw();cmd.showModal();cin.focus()}
+cin.oninput=()=>{ix=0;draw()};
+cin.onkeydown=e=>{const n=items.length||1;if(e.key==='ArrowDown'){ix=(ix+1)%n;draw();e.preventDefault()}else if(e.key==='ArrowUp'){ix=(ix-1+n)%n;draw();e.preventDefault()}else if(e.key==='Enter'&&items[ix])items[ix][1]()};
+cls.onclick=e=>{const l=e.target.closest('li[data-i]');if(l)items[l.dataset.i][1]()};
+cmd.onclick=e=>{if(e.target===cmd)cmd.close()};
+addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openCmd()}});
+$('#kb').onclick=openCmd;
 
 /* ---------- admin (open with /#admin, one account only) ---------- */
 const dlg=$('#adm');
