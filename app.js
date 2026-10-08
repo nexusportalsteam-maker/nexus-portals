@@ -6,6 +6,7 @@ const $=(s,e=document)=>e.querySelector(s),$$=(s,e=document)=>[...e.querySelecto
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ready=!SUPABASE_URL.includes('YOUR-')&&window.supabase;
 const sb=ready?supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;
+const wait=ms=>new Promise(r=>setTimeout(r,ms)),rnd=(a,b)=>a+Math.random()*(b-a);
 $('#yr').textContent=new Date().getFullYear();
 
 /* ---------- public content ---------- */
@@ -27,27 +28,28 @@ async function sendLead(row,st,form,ok){
  if(!sb){location.href=`mailto:?subject=Nexus enquiry&body=${encodeURIComponent(row.message)}`;return}
  st.textContent='Sending…';const {error}=await sb.from('leads').insert(row);
  if(error){st.textContent='Could not send. Please try again or use the contact details.';return}
- form.reset();st.textContent=ok;
+ form.reset();st.textContent=ok;nex.cheer();
 }
 $('#cf').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);sendLead({name:f.get('name').trim(),email:f.get('email').trim(),message:f.get('message').trim()},$('#cs'),e.target,'Message sent. We will reply soon.')};
 
-/* ---------- price estimator ---------- */
-const cfg=$('#cfg');let shown=0,raf;
+/* ---------- quote ticket ---------- */
+const cfg=$('#cfg'),$$$=n=>$$(`[name=${n}]:checked`,cfg),usd=n=>'$'+n.toLocaleString();let shown=0,raf,quoteTimer,lastN=0;
 function est(){
- const t=$('[name=t]:checked',cfg),fs=$$('[name=f]:checked',cfg),w=+$('[name=w]',cfg).value;
- let n=+t.dataset.p+fs.reduce((a,f)=>a+ +f.dataset.p,0);n=Math.round(n*(w<4?1.25:w>8?.9:1)/10)*10;
+ const t=$$$('t')[0],fs=$$$('f'),w=+$('[name=w]',cfg).value,m=w<4?1.25:w>8?.9:1;
+ const base=+t.dataset.p+fs.reduce((a,f)=>a+ +f.dataset.p,0),n=Math.round(base*m/10)*10;lastN=n;
  $('#wk').textContent=w+' weeks';$('#tm').textContent=w<4?'Rush delivery adds 25%':w>8?'Relaxed timeline saves 10%':'Standard timeline';
+ $('#rc').innerHTML=`<li><span>${esc(t.value)}</span><span>${usd(+t.dataset.p)}</span></li>`+fs.map(f=>`<li><span>${esc(f.value)}</span><span>+${usd(+f.dataset.p)}</span></li>`).join('')+`<li><span>${w} weeks</span><span>${m===1?'standard':m>1?'+25%':'-10%'}</span></li>`;
  cancelAnimationFrame(raf);const a=shown,s=performance.now();
- (function f(x){const k=Math.min(1,(x-s)/450);shown=Math.round(a+(n-a)*(1-Math.pow(1-k,3)));$('#pr').textContent='$'+shown.toLocaleString();if(k<1)raf=requestAnimationFrame(f)})(s);
- return `${t.value}${fs.length?' with '+fs.map(f=>f.value).join(', '):''}. ${w} weeks. About $${n.toLocaleString()}.`;
+ (function f(x){const k=Math.min(1,(x-s)/450);shown=Math.round(a+(n-a)*(1-Math.pow(1-k,3)));$('#pr').textContent=usd(shown);if(k<1)raf=requestAnimationFrame(f)})(s);
+ return `${t.value}${fs.length?' with '+fs.map(f=>f.value).join(', '):''}. ${w} weeks. About ${usd(n)}.`;
 }
-cfg.addEventListener('input',est);est();
-cfg.onsubmit=e=>{e.preventDefault();const f=new FormData(cfg);sendLead({name:f.get('name').trim(),email:f.get('email').trim(),message:'Project brief: '+est()},$('#ps'),cfg,'Brief sent. We will reply with next steps.')};
+cfg.addEventListener('input',()=>{est();clearTimeout(quoteTimer);quoteTimer=setTimeout(()=>nex.run(async()=>{nex.say(lastN>6000?'That is a big build. I like it.':lastN<1200?'Lean and quick. Smart.':'About '+usd(lastN)+'. Fair, right?',2600);await nex.act('jump',700)}),700)});est();
+cfg.onsubmit=e=>{e.preventDefault();const f=new FormData(cfg);sendLead({name:f.get('name').trim(),email:f.get('email').trim(),message:'Project brief: '+est()},$('#ps'),cfg,'Quote sent. We will reply with next steps.')};
 
 /* ---------- command menu (Ctrl/Cmd + K) ---------- */
 const cmd=$('#cmd'),cin=$('#cin'),cls=$('#cls');let items=[],ix=0;
 const go=s=>{cmd.close();$(s).scrollIntoView({behavior:'smooth'})};
-const ACT=[['Price a project',()=>go('#top')],['Services',()=>go('#services')],['Our work',()=>go('#work')],['How a project runs',()=>go('#process')],['Contact us',()=>go('#contact')],['Copy our email',()=>{cmd.close();S.email&&navigator.clipboard.writeText(S.email)}],['Admin sign in',()=>{cmd.close();openAdmin()}]];
+const ACT=[['Price a project',()=>go('#build')],['Services',()=>go('#services')],['Our work',()=>go('#work')],['How a project runs',()=>go('#process')],['Contact us',()=>go('#contact')],['Copy our email',()=>{cmd.close();S.email&&navigator.clipboard.writeText(S.email)}],['Admin sign in',()=>{cmd.close();openAdmin()}]];
 function draw(){const q=cin.value.toLowerCase();items=ACT.filter(a=>a[0].toLowerCase().includes(q));ix=Math.min(ix,Math.max(0,items.length-1));cls.innerHTML=items.map((a,i)=>`<li class="${i===ix?'on':''}" data-i="${i}">${a[0]}</li>`).join('')||'<li>No match</li>'}
 function openCmd(){cin.value='';ix=0;draw();cmd.showModal();cin.focus()}
 cin.oninput=()=>{ix=0;draw()};
@@ -108,20 +110,55 @@ async function tabL(){
 if(location.hash==='#admin')openAdmin();
 addEventListener('hashchange',()=>{if(location.hash==='#admin')openAdmin()});
 
-/* ---------- v2: spotlight cards + Isuru walks ---------- */
-document.addEventListener('pointermove',e=>{const c=e.target.closest('.svc,.card,.step');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-r.left+'px');c.style.setProperty('--my',e.clientY-r.top+'px')}});
-L.walk=['Just stretching my legs. Nice.','Patrolling the footer. Nice.','Walking meeting. Very productive.','Off to review some pull requests.'];
-M.style.left=Math.max(0,innerWidth-M.offsetWidth-24)+'px';
-(function stroll(){
- if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
- setTimeout(()=>{
-  if(M.classList.contains('min')||document.hidden||M.classList.contains('walk')){stroll();return}
-  const w=M.offsetWidth,lo=Math.max(0,100-w/2),hi=innerWidth-w-lo,cur=parseFloat(M.style.left)||0,x=lo+Math.random()*(hi-lo),dist=Math.abs(x-cur);
-  if(dist<120){stroll();return}
-  M.classList.toggle('fl',x>cur);
-  const dur=dist/(mood==='night'?40:mood==='morning'?110:70);
-  M.style.transitionDuration=dur+'s';M.classList.add('walk');M.style.left=x+'px';
-  if(Math.random()<.6)talk('walk',2800);
-  setTimeout(()=>{M.classList.remove('walk');stroll()},dur*1000);
- },5000+Math.random()*6000);
-})();
+/* ---------- Nex: the live mascot (pure SVG + CSS, driven by a small state machine) ---------- */
+const N=document.createElement('div');N.id='nex';N.setAttribute('role','img');N.setAttribute('aria-label','Nex, the Nexus mascot');
+N.innerHTML=`<div id="nb"></div><div class="fl"><svg viewBox="0 0 100 124" width="100%">
+<ellipse class="sh" cx="50" cy="120" rx="28" ry="4.5"/>
+<g class="lg a"><rect x="32" y="90" width="12" height="26" rx="6"/><rect x="28" y="112" width="20" height="8" rx="4"/></g>
+<g class="lg b"><rect x="55" y="90" width="12" height="26" rx="6"/><rect x="51" y="112" width="20" height="8" rx="4"/></g>
+<g class="bd">
+<g class="an"><line x1="50" y1="32" x2="50" y2="14"/><circle cx="50" cy="12" r="6"/></g>
+<rect class="ar l" x="9" y="58" width="12" height="28" rx="6"/><rect class="ar r" x="79" y="58" width="12" height="28" rx="6"/>
+<rect class="bo" x="18" y="30" width="64" height="68" rx="30"/>
+<rect class="sc" x="27" y="42" width="46" height="34" rx="15"/>
+<g class="ey"><circle class="w1" cx="39" cy="57" r="6.5"/><circle class="w1" cx="61" cy="57" r="6.5"/><g class="pu"><circle cx="39" cy="57" r="3"/><circle cx="61" cy="57" r="3"/></g></g>
+<path class="mo" d="M43 67q7 6 14 0"/><circle class="ck" cx="30" cy="84" r="4"/><circle class="ck" cx="70" cy="84" r="4"/>
+</g></svg></div>`;
+document.body.appendChild(N);
+const nb=$('#nb',N),pu=$('.pu',N);
+const nex={x:0,busy:false,sleeping:false,last:Date.now(),
+ say(t,ms=2800){nb.textContent=t;nb.classList.add('on');clearTimeout(nex.bt);nex.bt=setTimeout(()=>nb.classList.remove('on'),ms)},
+ async act(c,ms){N.classList.add(c);await wait(ms);N.classList.remove(c)},
+ async go(x){const d=Math.abs(x-nex.x);if(d<40)return;N.classList.toggle('back',x<nex.x);N.style.transitionDuration=d/95+'s';N.classList.add('walk');N.style.left=x+'px';nex.x=x;await wait(d/95*1000);N.classList.remove('walk')},
+ async run(fn){if(nex.busy||nex.sleeping)return;nex.busy=true;try{await fn()}finally{nex.busy=false}},
+ cheer(){nex.busy=false;nex.run(async()=>{nex.say('Sent! Yes! We will be in touch.',3200);await nex.act('cheer',1900)})},
+ wake(){nex.last=Date.now();if(nex.sleeping){nex.sleeping=false;N.classList.remove('sleep');nex.say('Oh, hi again!')}}
+};
+const bounds=()=>[90,Math.max(120,innerWidth-176)];
+nex.x=bounds()[0];N.style.left=nex.x+'px';
+const JOKES=['I run on coffee and clean code.','Fun fact: I have no bugs. Only features.','Ctrl K, try it.','Legs: 2. Deadlines met: all.','I would price myself, but I am priceless.'];
+const SECTION={build:'Tweak anything. The price moves live.',services:'Four things we build. Pick one.',work:'Real projects, real launches.',process:'Weekly demos. No surprises.',contact:'Say hi. I will pass it on.'};
+const moves=[
+ async()=>{const[l,h]=bounds();await nex.go(rnd(l,h));if(Math.random()<.5)nex.say(JOKES[Math.random()*JOKES.length|0])},
+ async()=>{nex.say('Hello there!',2200);await nex.act('wave',2200)},
+ async()=>{await nex.act('jump',700)},
+ async()=>{nex.say('Nobody is watching. Dance time.',2600);await nex.act('dance',2900)},
+ async()=>{nex.say('Psst. Price your project up there.',2800);await nex.act('point',2800)}
+];
+N.onclick=()=>{nex.wake();nex.run(async()=>{const k=Math.random();if(k<.4){nex.say(JOKES[Math.random()*JOKES.length|0]);await nex.act('jump',700)}else if(k<.7)await moves[1]();else await moves[3]()})};
+['pointermove','scroll','keydown','touchstart'].forEach(ev=>addEventListener(ev,()=>nex.wake(),{passive:true}));
+addEventListener('pointermove',e=>{const r=N.getBoundingClientRect(),dx=Math.max(-3,Math.min(3,(e.clientX-r.left-43)/60)),dy=Math.max(-2.5,Math.min(2.5,(e.clientY-r.top-55)/60));pu.style.transform=`translate(${N.classList.contains('back')?-dx:dx}px,${dy}px)`});
+addEventListener('resize',()=>{const[l,h]=bounds();if(nex.x>h){nex.x=h;N.style.transitionDuration='0s';N.style.left=h+'px'}});
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+ setTimeout(()=>nex.run(async()=>{nex.say('Hi, I am Nex. I live here.',3000);await nex.act('wave',2200)}),900);
+ const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){const id=en.target.id;nex.run(async()=>{nex.say(SECTION[id]);await nex.act('point',1800)})}}),{threshold:.55});
+ Object.keys(SECTION).forEach(id=>io.observe($('#'+id)));
+ (async function life(){
+  for(;;){
+   await wait(rnd(3500,8000));
+   if(document.hidden||nex.busy||nex.sleeping)continue;
+   if(Date.now()-nex.last>45000){nex.sleeping=true;N.classList.add('sleep');nex.say('zzz…',4000);continue}
+   await nex.run(moves[Math.random()*moves.length|0]);
+  }
+ })();
+}

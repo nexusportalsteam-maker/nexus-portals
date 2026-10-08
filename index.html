@@ -3,73 +3,80 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nexus | Portals, Web Apps & Mobile-Ready Products</title>
-<meta name="description" content="Nexus builds customer portals, web apps, websites and installable mobile products. Price your project online and get a launch date in writing.">
-<meta name="theme-color" content="#1b3cff">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Nexus | Portals, Web Apps & Mobile-Ready Products">
-<meta property="og:description" content="Build and price your project in 30 seconds. Fast, secure, launched on a date we agree in writing.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%231b3cff'/><circle cx='16' cy='16' r='7' fill='none' stroke='%23ffd23f' stroke-width='4'/></svg>">
+<title>Nexus | Portals, web apps and installable apps, priced upfront</title>
+<meta name="description" content="Nexus builds customer portals, web apps, websites and installable mobile apps. Price your project online and get a launch date in writing.">
+<meta name="theme-color" content="#f4f0ff">
+<meta property="og:title" content="Nexus | Software your business runs on">
+<meta property="og:description" content="Build and price your project in 30 seconds. Fixed price, dated launch, weekly demos.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='10' fill='%23ffc82e'/><path d='M9 23V9l14 14V9' stroke='%231c1233' stroke-width='4' fill='none' stroke-linejoin='round' stroke-linecap='round'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Nexus","description":"Web, app and portal development studio","serviceType":["Customer portals","Web app development","Website development","Progressive web apps"]}</script>
 </head>
 <body>
 <header class="bar"><div class="w">
-  <a class="logo" href="#top"><i></i>nexus</a>
-  <nav><a href="#services">Services</a><a href="#work">Work</a><a href="#process">Process</a><a href="#contact">Contact</a><button id="kb" aria-label="Open command menu">Search <kbd>Ctrl K</kbd></button></nav>
+  <a class="logo" href="#top"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><circle cx="9" cy="23" r="5" fill="#ff5b23"/><circle cx="23" cy="9" r="5" fill="#12b5a6"/><path d="M9 23V9l14 14V9" stroke="#1c1233" stroke-width="3.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>nexus</a>
+  <nav><a href="#build">Quote</a><a href="#services">Services</a><a href="#work">Work</a><a href="#process">Process</a><a href="#contact">Contact</a><button id="kb" aria-label="Open command menu">Jump to <kbd>Ctrl K</kbd></button></nav>
 </div></header>
 
 <main>
-<section class="hero" id="top"><div class="w hg">
-  <div>
-    <h1>We build the portals your business runs on.</h1>
-    <p class="lead">Customer logins, dashboards, booking systems, websites and installable apps. Build your project on the right and see the price and timeline before you talk to anyone.</p>
+<section class="hero" id="top">
+  <div class="w">
+    <h1>Software your business runs on.</h1>
+    <p class="lead">Customer portals, dashboards, booking systems, websites and apps that install on any phone. Fixed price, a launch date in writing, a live demo every week.</p>
+    <div class="cta"><a class="btn" href="#build">Price your project</a><a class="btn alt" href="#work">See our work</a></div>
   </div>
-  <form id="cfg" class="cfg" aria-label="Project price estimator">
-    <h2>Price your project</h2>
-    <div class="g3">
-      <label class="o"><input type="radio" name="t" value="Website" data-p="600" checked><span>Website</span></label>
-      <label class="o"><input type="radio" name="t" value="Web app" data-p="2400"><span>Web app</span></label>
-      <label class="o"><input type="radio" name="t" value="Mobile app" data-p="3200"><span>Mobile app</span></label>
-    </div>
-    <div class="chips">
-      <label class="o"><input type="checkbox" name="f" value="Customer logins" data-p="500"><span>Customer logins</span></label>
-      <label class="o"><input type="checkbox" name="f" value="Admin panel" data-p="400"><span>Admin panel</span></label>
-      <label class="o"><input type="checkbox" name="f" value="Payments" data-p="600"><span>Payments</span></label>
-      <label class="o"><input type="checkbox" name="f" value="Bookings" data-p="500"><span>Bookings</span></label>
-      <label class="o"><input type="checkbox" name="f" value="SEO setup" data-p="200"><span>SEO setup</span></label>
-      <label class="o"><input type="checkbox" name="f" value="Two languages" data-p="300"><span>Two languages</span></label>
-    </div>
-    <label class="rg">Delivery time <output id="wk"></output><input type="range" name="w" min="2" max="12" value="6"></label>
-    <div class="est"><div><small>Estimate from</small><strong id="pr">$0</strong></div><small id="tm"></small></div>
-    <input name="name" placeholder="Your name" maxlength="80" required>
-    <input name="email" type="email" placeholder="Email address" maxlength="120" required>
-    <button class="btn">Send this brief</button>
+  <div class="road" aria-hidden="true"></div>
+</section>
+
+<section id="build"><div class="w bg">
+  <div class="intro"><h2>Build your quote, watch the price move.</h2><p>Pick what you need and how soon. The ticket updates as you go, and our little guide will comment on it. Send it to us when it looks right.</p></div>
+  <form id="cfg" class="tk" aria-label="Project price estimator">
+    <fieldset><legend>What are we building?</legend>
+      <div class="g3">
+        <label class="o"><input type="radio" name="t" value="Website" data-p="600" checked><span>Website</span></label>
+        <label class="o"><input type="radio" name="t" value="Web app" data-p="2400"><span>Web app</span></label>
+        <label class="o"><input type="radio" name="t" value="Mobile app" data-p="3200"><span>Mobile app</span></label>
+      </div>
+    </fieldset>
+    <fieldset><legend>Add features</legend>
+      <div class="chips">
+        <label class="o"><input type="checkbox" name="f" value="Customer logins" data-p="500"><span>Customer logins</span></label>
+        <label class="o"><input type="checkbox" name="f" value="Admin panel" data-p="400"><span>Admin panel</span></label>
+        <label class="o"><input type="checkbox" name="f" value="Payments" data-p="600"><span>Payments</span></label>
+        <label class="o"><input type="checkbox" name="f" value="Bookings" data-p="500"><span>Bookings</span></label>
+        <label class="o"><input type="checkbox" name="f" value="SEO setup" data-p="200"><span>SEO setup</span></label>
+        <label class="o"><input type="checkbox" name="f" value="Two languages" data-p="300"><span>Two languages</span></label>
+      </div>
+    </fieldset>
+    <label class="rg">How soon? <output id="wk"></output><input type="range" name="w" min="2" max="12" value="6"></label>
+    <ul id="rc" class="rc"></ul>
+    <div class="tot"><div><small id="tm"></small><strong id="pr">$0</strong></div><small>Estimate from</small></div>
+    <div class="two"><input name="name" placeholder="Your name" maxlength="80" required><input name="email" type="email" placeholder="Email address" maxlength="120" required></div>
+    <button class="btn">Send this quote</button>
     <p id="ps" role="status"></p>
   </form>
 </div></section>
 
 <section id="services"><div class="w">
   <h2>What we build</h2>
-  <ul class="sv">
-    <li><h3>Customer portals</h3><p>Secure logins where your clients see orders, files, invoices and project status.</p></li>
-    <li><h3>Web apps</h3><p>Dashboards, booking systems and internal tools that replace spreadsheets.</p></li>
-    <li><h3>Websites</h3><p>Fast, search-friendly sites with content you can edit yourself.</p></li>
-    <li><h3>Installable mobile apps</h3><p>One codebase that installs on any phone, works offline and sends notifications.</p></li>
-  </ul>
+  <div class="bento">
+    <article class="t1"><h3>Customer portals</h3><p>Secure logins where clients see orders, files, invoices and project status.</p></article>
+    <article class="t2"><h3>Web apps</h3><p>Dashboards, booking systems and internal tools that replace your spreadsheets.</p></article>
+    <article class="t3"><h3>Websites</h3><p>Fast, search-friendly sites with content you can edit yourself.</p></article>
+    <article class="t4"><h3>Installable mobile apps</h3><p>One codebase that installs on any phone, works offline and sends notifications. No app store queue.</p></article>
+  </div>
 </div></section>
 
-<section id="work"><div class="w"><h2>Selected work</h2><div class="grid" id="projects"></div></div></section>
+<section id="work" class="soft"><div class="w"><h2>Selected work</h2><div class="grid" id="projects"></div></div></section>
 
 <section id="process"><div class="w">
   <h2>How a project runs</h2>
   <ol class="ps">
-    <li><b>1</b><h3>Brief</h3><p>A short call. We agree scope, price and launch date in writing.</p></li>
-    <li><b>2</b><h3>Design</h3><p>You approve real screens before any code is written.</p></li>
-    <li><b>3</b><h3>Build</h3><p>Weekly demos on a live link, so nothing surprises you.</p></li>
-    <li><b>4</b><h3>Launch</h3><p>We deploy, hand over everything and stay on for support.</p></li>
+    <li><b>1</b><div><h3>Brief</h3><p>A short call. We agree scope, price and launch date in writing.</p></div></li>
+    <li><b>2</b><div><h3>Design</h3><p>You approve real screens before any code is written.</p></div></li>
+    <li><b>3</b><div><h3>Build</h3><p>Weekly demos on a live link, so nothing surprises you.</p></div></li>
+    <li><b>4</b><div><h3>Launch</h3><p>We deploy, hand over everything and stay on for support.</p></div></li>
   </ol>
 </div></section>
 
@@ -88,7 +95,7 @@
 </div></section>
 </main>
 
-<footer class="dk"><div class="w">© <span id="yr"></span> Nexus. Press Ctrl K anywhere to jump around.</div></footer>
+<footer class="dk"><div class="w">© <span id="yr"></span> Nexus. Press Ctrl K to jump around, or poke the little guy.</div></footer>
 
 <dialog id="cmd"><input id="cin" placeholder="Where to?" aria-label="Command"><ul id="cls"></ul></dialog>
 <dialog id="adm"></dialog>
