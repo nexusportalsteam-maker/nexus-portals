@@ -109,7 +109,6 @@ addEventListener('pointermove',e=>{
  if(lt&&lt!==t){lt.style.removeProperty('--tx');lt.style.removeProperty('--ty')}lt=t;
  if(t){const r=t.getBoundingClientRect();t.style.setProperty('--ty',((e.clientX-r.left)/r.width-.5)*10+'deg');t.style.setProperty('--tx',-((e.clientY-r.top)/r.height-.5)*10+'deg')}
 });
-addEventListener('scroll',()=>{const b=$('.bar'),m=document.documentElement.scrollHeight-innerHeight;b.style.setProperty('--p',m>0?Math.min(1,scrollY/m):0);b.classList.toggle('st',scrollY>8)},{passive:true});
 addEventListener('scroll',()=>{const r=$('.road');if(r)r.style.setProperty('--rx',-(scrollY*.6%72)+'px')},{passive:true});
 
 /* ---------- command menu (Ctrl/Cmd + K) ---------- */
