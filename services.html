@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Services | Nexus</title>
+<meta name="description" content="Customer portals, web apps, websites and installable mobile apps, built to a fixed price.">
+<meta name="theme-color" content="#f4f0ff">
+<meta property="og:title" content="Services | Nexus">
+<meta property="og:description" content="Customer portals, web apps, websites and installable mobile apps, built to a fixed price.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='10' fill='%23ffc82e'/><path d='M9 23V9l14 14V9' stroke='%231c1233' stroke-width='4' fill='none' stroke-linejoin='round' stroke-linecap='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="bar"><div class="w">
+  <a class="logo" href="index.html"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><circle cx="9" cy="23" r="5" fill="#ff5b23"/><circle cx="23" cy="9" r="5" fill="#12b5a6"/><path d="M9 23V9l14 14V9" stroke="#1c1233" stroke-width="3.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>nexus</a>
+  <nav><a href="services.html">Services</a><a href="work.html">Work</a><a href="quote.html">Quote</a><a href="contact.html">Contact</a><button id="kb" aria-label="Open command menu">Jump to <kbd>Ctrl K</kbd></button></nav>
+</div></header>
+<main>
+<section class="pg"><div class="w"><h1 class="pt">Four things, built properly.</h1><p class="lead2">Everything is priced upfront and launched on a date we agree in writing.</p></div></section>
+<section class="svs" data-nex="Each one links to the quote builder."><div class="w">
+<article class="svx t1" id="portals"><div><h2>Customer portals</h2><p>Secure logins where your clients see orders, files, invoices and project status, so they stop emailing you to ask.</p><a class="btn alt" href="quote.html">Price a portal</a></div><ul><li>Client logins and roles</li><li>File sharing and invoices</li><li>Status timelines</li><li>Email notifications</li></ul></article><article class="svx t2" id="apps"><div><h2>Web apps</h2><p>Dashboards, booking systems and internal tools that replace the spreadsheets your team fights with.</p><a class="btn alt" href="quote.html">Price a web app</a></div><ul><li>Live dashboards</li><li>Bookings and scheduling</li><li>Admin panel included on request</li><li>Payments if you need them</li></ul></article><article class="svx t3" id="sites"><div><h2>Websites</h2><p>Fast, search-friendly sites with content you can edit yourself, no developer needed for a typo.</p><a class="btn alt" href="quote.html">Price a website</a></div><ul><li>Editable content</li><li>SEO setup</li><li>Two languages on request</li><li>Loads in under two seconds</li></ul></article><article class="svx t4" id="mobile"><div><h2>Installable mobile apps</h2><p>One codebase that installs on any phone, works offline and sends notifications. No app store queue.</p><a class="btn alt" href="quote.html">Price a mobile app</a></div><ul><li>Installs from the browser</li><li>Offline mode</li><li>Push notifications</li><li>One build for iPhone and Android</li></ul></article>
+</div></section>
+</main>
+<footer class="dk"><div class="w">© <span id="yr"></span> Nexus. Press Ctrl K to jump around, or poke the little guy.</div></footer>
+<dialog id="cmd"><input id="cin" placeholder="Where to?" aria-label="Command"><ul id="cls"></ul></dialog>
+<dialog id="adm"></dialog>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script src="nex.js"></script>
+</body>
+</html>

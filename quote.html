@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quote | Nexus</title>
+<meta name="description" content="Build your project and watch the price update. Send the quote when it looks right.">
+<meta name="theme-color" content="#f4f0ff">
+<meta property="og:title" content="Quote | Nexus">
+<meta property="og:description" content="Build your project and watch the price update. Send the quote when it looks right.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='10' fill='%23ffc82e'/><path d='M9 23V9l14 14V9' stroke='%231c1233' stroke-width='4' fill='none' stroke-linejoin='round' stroke-linecap='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="bar"><div class="w">
+  <a class="logo" href="index.html"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><circle cx="9" cy="23" r="5" fill="#ff5b23"/><circle cx="23" cy="9" r="5" fill="#12b5a6"/><path d="M9 23V9l14 14V9" stroke="#1c1233" stroke-width="3.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>nexus</a>
+  <nav><a href="services.html">Services</a><a href="work.html">Work</a><a href="quote.html">Quote</a><a href="contact.html">Contact</a><button id="kb" aria-label="Open command menu">Jump to <kbd>Ctrl K</kbd></button></nav>
+</div></header>
+<main>
+<section data-nex="Tweak anything. The price moves live."><div class="w bg">
+  <div class="intro"><h1 class="pt sm">Build your quote.</h1><p>Pick what you need and how soon. The ticket updates as you go, and Nex will chip in with suggestions. Send it to us when it looks right.</p></div>
+  <form id="cfg" class="tk" aria-label="Project price estimator">
+    <fieldset><legend>What are we building?</legend>
+      <div class="g3">
+        <label class="o"><input type="radio" name="t" value="Website" data-p="600" checked><span>Website</span></label>
+        <label class="o"><input type="radio" name="t" value="Web app" data-p="2400"><span>Web app</span></label>
+        <label class="o"><input type="radio" name="t" value="Mobile app" data-p="3200"><span>Mobile app</span></label>
+      </div>
+    </fieldset>
+    <fieldset><legend>Add features</legend>
+      <div class="chips">
+        <label class="o"><input type="checkbox" name="f" value="Customer logins" data-p="500"><span>Customer logins</span></label>
+        <label class="o"><input type="checkbox" name="f" value="Admin panel" data-p="400"><span>Admin panel</span></label>
+        <label class="o"><input type="checkbox" name="f" value="Payments" data-p="600"><span>Payments</span></label>
+        <label class="o"><input type="checkbox" name="f" value="Bookings" data-p="500"><span>Bookings</span></label>
+        <label class="o"><input type="checkbox" name="f" value="SEO setup" data-p="200"><span>SEO setup</span></label>
+        <label class="o"><input type="checkbox" name="f" value="Two languages" data-p="300"><span>Two languages</span></label>
+      </div>
+    </fieldset>
+    <label class="rg">How soon? <output id="wk"></output><input type="range" name="w" min="2" max="12" value="6"></label>
+    <ul id="rc" class="rc"></ul>
+    <div class="tot"><div><small id="tm"></small><strong id="pr">$0</strong></div><small>Estimate from</small></div>
+    <div class="two"><input name="name" placeholder="Your name" maxlength="80" required><input name="email" type="email" placeholder="Email address" maxlength="120" required></div>
+    <button class="btn">Send this quote</button>
+    <p id="ps" role="status"></p>
+  </form>
+</div></section>
+</main>
+<footer class="dk"><div class="w">© <span id="yr"></span> Nexus. Press Ctrl K to jump around, or poke the little guy.</div></footer>
+<dialog id="cmd"><input id="cin" placeholder="Where to?" aria-label="Command"><ul id="cls"></ul></dialog>
+<dialog id="adm"></dialog>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script src="nex.js"></script>
+</body>
+</html>

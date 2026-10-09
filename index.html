@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nexus | Portals, web apps and installable apps, priced upfront</title>
-<meta name="description" content="Nexus builds customer portals, web apps, websites and installable mobile apps. Price your project online and get a launch date in writing.">
+<title>Nexus | Software your business runs on</title>
+<meta name="description" content="Customer portals, web apps, websites and installable apps. Fixed price, dated launch, weekly demos.">
 <meta name="theme-color" content="#f4f0ff">
 <meta property="og:title" content="Nexus | Software your business runs on">
-<meta property="og:description" content="Build and price your project in 30 seconds. Fixed price, dated launch, weekly demos.">
+<meta property="og:description" content="Customer portals, web apps, websites and installable apps. Fixed price, dated launch, weekly demos.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='10' fill='%23ffc82e'/><path d='M9 23V9l14 14V9' stroke='%231c1233' stroke-width='4' fill='none' stroke-linejoin='round' stroke-linecap='round'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -15,62 +15,30 @@
 </head>
 <body>
 <header class="bar"><div class="w">
-  <a class="logo" href="#top"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><circle cx="9" cy="23" r="5" fill="#ff5b23"/><circle cx="23" cy="9" r="5" fill="#12b5a6"/><path d="M9 23V9l14 14V9" stroke="#1c1233" stroke-width="3.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>nexus</a>
-  <nav><a href="#build">Quote</a><a href="#services">Services</a><a href="#work">Work</a><a href="#process">Process</a><a href="#contact">Contact</a><button id="kb" aria-label="Open command menu">Jump to <kbd>Ctrl K</kbd></button></nav>
+  <a class="logo" href="index.html"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><circle cx="9" cy="23" r="5" fill="#ff5b23"/><circle cx="23" cy="9" r="5" fill="#12b5a6"/><path d="M9 23V9l14 14V9" stroke="#1c1233" stroke-width="3.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg>nexus</a>
+  <nav><a href="services.html">Services</a><a href="work.html">Work</a><a href="quote.html">Quote</a><a href="contact.html">Contact</a><button id="kb" aria-label="Open command menu">Jump to <kbd>Ctrl K</kbd></button></nav>
 </div></header>
-
 <main>
 <section class="hero" id="top">
+  <i class="fx a"></i><i class="fx b"></i><i class="fx c"></i>
   <div class="w">
-    <h1>Software your business runs on.</h1>
+    <h1><span>Software</span> <span>your</span> <span>business</span> <span>runs</span> <span>on.</span></h1>
     <p class="lead">Customer portals, dashboards, booking systems, websites and apps that install on any phone. Fixed price, a launch date in writing, a live demo every week.</p>
-    <div class="cta"><a class="btn" href="#build">Price your project</a><a class="btn alt" href="#work">See our work</a></div>
+    <div class="cta"><a class="btn" href="quote.html">Price your project</a><a class="btn alt" href="work.html">See our work</a></div>
   </div>
   <div class="road" aria-hidden="true"></div>
 </section>
-
-<section id="build"><div class="w bg">
-  <div class="intro"><h2>Build your quote, watch the price move.</h2><p>Pick what you need and how soon. The ticket updates as you go, and our little guide will comment on it. Send it to us when it looks right.</p></div>
-  <form id="cfg" class="tk" aria-label="Project price estimator">
-    <fieldset><legend>What are we building?</legend>
-      <div class="g3">
-        <label class="o"><input type="radio" name="t" value="Website" data-p="600" checked><span>Website</span></label>
-        <label class="o"><input type="radio" name="t" value="Web app" data-p="2400"><span>Web app</span></label>
-        <label class="o"><input type="radio" name="t" value="Mobile app" data-p="3200"><span>Mobile app</span></label>
-      </div>
-    </fieldset>
-    <fieldset><legend>Add features</legend>
-      <div class="chips">
-        <label class="o"><input type="checkbox" name="f" value="Customer logins" data-p="500"><span>Customer logins</span></label>
-        <label class="o"><input type="checkbox" name="f" value="Admin panel" data-p="400"><span>Admin panel</span></label>
-        <label class="o"><input type="checkbox" name="f" value="Payments" data-p="600"><span>Payments</span></label>
-        <label class="o"><input type="checkbox" name="f" value="Bookings" data-p="500"><span>Bookings</span></label>
-        <label class="o"><input type="checkbox" name="f" value="SEO setup" data-p="200"><span>SEO setup</span></label>
-        <label class="o"><input type="checkbox" name="f" value="Two languages" data-p="300"><span>Two languages</span></label>
-      </div>
-    </fieldset>
-    <label class="rg">How soon? <output id="wk"></output><input type="range" name="w" min="2" max="12" value="6"></label>
-    <ul id="rc" class="rc"></ul>
-    <div class="tot"><div><small id="tm"></small><strong id="pr">$0</strong></div><small>Estimate from</small></div>
-    <div class="two"><input name="name" placeholder="Your name" maxlength="80" required><input name="email" type="email" placeholder="Email address" maxlength="120" required></div>
-    <button class="btn">Send this quote</button>
-    <p id="ps" role="status"></p>
-  </form>
-</div></section>
-
-<section id="services"><div class="w">
+<section data-nex="Four things we build. Tap one."><div class="w">
   <h2>What we build</h2>
   <div class="bento">
-    <article class="t1"><h3>Customer portals</h3><p>Secure logins where clients see orders, files, invoices and project status.</p></article>
-    <article class="t2"><h3>Web apps</h3><p>Dashboards, booking systems and internal tools that replace your spreadsheets.</p></article>
-    <article class="t3"><h3>Websites</h3><p>Fast, search-friendly sites with content you can edit yourself.</p></article>
-    <article class="t4"><h3>Installable mobile apps</h3><p>One codebase that installs on any phone, works offline and sends notifications. No app store queue.</p></article>
+    <a class="t1" href="services.html#portals"><h3>Customer portals</h3><p>Logins where clients see orders, files and invoices.</p></a>
+    <a class="t2" href="services.html#apps"><h3>Web apps</h3><p>Dashboards and tools that replace your spreadsheets.</p></a>
+    <a class="t3" href="services.html#sites"><h3>Websites</h3><p>Fast sites you can edit yourself.</p></a>
+    <a class="t4" href="services.html#mobile"><h3>Installable mobile apps</h3><p>One codebase, installs on any phone, works offline.</p></a>
   </div>
 </div></section>
-
-<section id="work" class="soft"><div class="w"><h2>Selected work</h2><div class="grid" id="projects"></div></div></section>
-
-<section id="process"><div class="w">
+<section class="soft" data-nex="Recent work. Hover a card, it tilts."><div class="w"><h2>Recent work</h2><div class="grid" id="projects" data-limit="3"></div><p class="more"><a class="btn alt" href="work.html">All projects</a></p></div></section>
+<section data-nex="Four steps. Weekly demos. No surprises."><div class="w">
   <h2>How a project runs</h2>
   <ol class="ps">
     <li><b>1</b><div><h3>Brief</h3><p>A short call. We agree scope, price and launch date in writing.</p></div></li>
@@ -79,28 +47,13 @@
     <li><b>4</b><div><h3>Launch</h3><p>We deploy, hand over everything and stay on for support.</p></div></li>
   </ol>
 </div></section>
-
-<section id="contact" class="dk"><div class="w">
-  <h2>Have a bigger idea?</h2>
-  <div class="split">
-    <form id="cf">
-      <input name="name" placeholder="Your name" maxlength="80" required>
-      <input name="email" type="email" placeholder="Email address" maxlength="120" required>
-      <textarea name="message" rows="5" placeholder="Tell us what you want to build" maxlength="2000" required></textarea>
-      <button class="btn">Send message</button>
-      <p id="cs" role="status"></p>
-    </form>
-    <div><h3>Reach us directly</h3><ul id="cl"><li>Loading…</li></ul></div>
-  </div>
-</div></section>
+<section class="dk"><div class="w band"><h2>Know what you want?</h2><a class="btn" href="quote.html">Build your quote</a></div></section>
 </main>
-
 <footer class="dk"><div class="w">© <span id="yr"></span> Nexus. Press Ctrl K to jump around, or poke the little guy.</div></footer>
-
 <dialog id="cmd"><input id="cin" placeholder="Where to?" aria-label="Command"><ul id="cls"></ul></dialog>
 <dialog id="adm"></dialog>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="app.js"></script>
+<script src="nex.js"></script>
 </body>
 </html>
