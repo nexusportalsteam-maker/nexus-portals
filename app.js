@@ -65,10 +65,12 @@ function bindForms(){
  cfg.onsubmit=e=>{e.preventDefault();const f=new FormData(cfg);sendLead({name:f.get('name').trim(),email:f.get('email').trim(),message:'Project brief: '+est()},$('#ps'),cfg,'Quote sent. We will reply with next steps.')};
  est();
 }
+const rvIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rvIO.unobserve(e.target)}}),{threshold:.15,rootMargin:'0px 0px -6% 0px'});
 function pageInit(){
  const cur=location.pathname.split('/').pop()||'index.html';
  $$('.bar nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')===cur));
  paint();bindForms();$$('[data-nex]').forEach(nex.watch);
+ $$('main h2,main .bento>*,main .ps li,main .svx,main .tk,main .intro').forEach(e=>{e.classList.add('rv');e.style.setProperty('--d',Math.min(3,[...e.parentNode.children].indexOf(e))*.09+'s');rvIO.observe(e)});
  if(location.hash)$(location.hash)?.scrollIntoView();
 }
 const boot=()=>{pageInit();nex.start();load()};
