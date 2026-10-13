@@ -184,12 +184,14 @@ dialog[open]::backdrop{animation:fd .4s ease both}
 
 .hl{position:relative;max-width:540px}.hl .lead{position:relative;z-index:1}.hl .hstrip{opacity:.5}.hl .lead{font-weight:700;color:var(--ink)}
 
+.hl{isolation:isolate}.hl .hstrip{z-index:-1}.hl .lead{z-index:2}
 @media(max-width:860px){
-.hero .fx{display:block;top:auto;right:auto}
+.hl .hstrip{opacity:.3}
+.hero .fx{display:block!important;top:auto!important;right:auto;z-index:0;opacity:1}
 .hero .fx.a{width:58px;height:58px;left:7%;bottom:128px}
 .hero .fx.b{width:46px;height:46px;border-radius:14px;left:46%;bottom:84px}
-.hero .fx.c{width:84px;height:84px;border-width:11px;right:5%;bottom:140px}
-.hero:before,.hero:after{content:"";position:absolute;pointer-events:none;border:2px solid var(--ink)}
+.hero .fx.c{width:84px;height:84px;border-width:11px;right:5%!important;left:auto;bottom:140px}
+.hero:before,.hero:after{content:"";display:block;position:absolute;z-index:0;pointer-events:none;border:2px solid var(--ink)}
 .hero:before{width:40px;height:26px;border-radius:8px;background:var(--sun);rotate:-12deg;left:30%;bottom:178px}
 .hero:after{width:28px;height:28px;border-radius:50%;background:var(--te);right:30%;bottom:92px}
 }
