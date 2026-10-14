@@ -184,9 +184,9 @@ dialog[open]::backdrop{animation:fd .4s ease both}
 
 .hero .lead{font-weight:700;color:var(--ink)}
 
-.hbs{overflow-x:clip}.hb{position:relative;isolation:isolate}.hb .hstrip{z-index:0;opacity:.5}.hb .bento{position:relative;z-index:1}
+
 @media(max-width:860px){
-.hb .hstrip{opacity:.3}
+
 .hero .fx{display:block!important;top:auto!important;right:auto;z-index:0;opacity:1}
 .hero .fx.a{width:58px;height:58px;left:7%;bottom:128px}
 .hero .fx.b{width:46px;height:46px;border-radius:14px;left:46%;bottom:84px}
@@ -201,3 +201,14 @@ dialog[open]::backdrop{animation:fd .4s ease both}
 .svx li:hover,.svx li:focus{z-index:5;outline:none}
 .svx li[data-tip]:after{content:attr(data-tip);position:absolute;left:12px;bottom:calc(100% + 10px);width:max-content;max-width:min(280px,calc(100% - 24px));padding:10px 14px;border:2px solid var(--ink);border-radius:14px;background:#fff;color:var(--ink);font:500 .92rem/1.4 Figtree,sans-serif;box-shadow:0 6px 0 var(--ink);opacity:0;translate:0 6px;pointer-events:none;transition:opacity .2s,translate .25s var(--ease);z-index:6}
 .svx li[data-tip]:hover:after,.svx li[data-tip]:focus:after{opacity:1;translate:0 0}
+
+/* bigger logo + hover effect */
+.logo{font-size:1.95rem}
+@media(max-width:520px){.logo{font-size:1.6rem}}
+.logo .ne,.logo .us{display:inline-block;transition:translate .3s cubic-bezier(.3,1.5,.5,1)}
+.logo .x{transition:scale .3s cubic-bezier(.3,1.5,.5,1)}
+.logo:hover .ne{translate:-.16em 0}
+.logo:hover .us{translate:.16em 0}
+.logo:hover .x{scale:1.25;animation:xwig .6s ease-in-out infinite}
+@keyframes xwig{0%,100%{rotate:0deg}20%{rotate:-16deg}40%{rotate:14deg}60%{rotate:-10deg}80%{rotate:8deg}}
+@media(prefers-reduced-motion:reduce){.logo:hover .x{animation:none}}
