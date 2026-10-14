@@ -212,3 +212,15 @@ dialog[open]::backdrop{animation:fd .4s ease both}
 .logo:hover .x{scale:1.25;animation:xwig .6s ease-in-out infinite}
 @keyframes xwig{0%,100%{rotate:0deg}20%{rotate:-16deg}40%{rotate:14deg}60%{rotate:-10deg}80%{rotate:8deg}}
 @media(prefers-reduced-motion:reduce){.logo:hover .x{animation:none}}
+
+/* accounts: footer link, empty state, customer portal */
+.empty,.mu{color:var(--mu)}.empty{grid-column:1/-1}
+footer .fl{margin-left:12px;padding:3px 12px;background:transparent;color:#fff;border-color:#fff6}
+footer .fl:hover{background:#fff;color:var(--ink)}
+.sc{padding:16px 0;border-top:1px solid #1c123322}.sc h3{margin:0}.sc h4,#adm h4{margin:14px 0 6px}
+.kp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.kp div{padding:12px;border:2px solid var(--ink);border-radius:16px;background:var(--bg)}
+.kp b{display:block;font:800 1.6rem Gabarito,Figtree,sans-serif}.kp small{color:var(--mu)}
+.bars{display:flex;align-items:flex-end;gap:2px;height:90px;margin:6px 0 14px}
+.bars i{flex:1;background:var(--te);border-radius:3px 3px 0 0;min-width:2px}
+.se{color:var(--mu);margin:0}
